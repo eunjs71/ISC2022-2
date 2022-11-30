@@ -3,6 +3,9 @@ a {
   text-decoration: none;
 }
 
+body {
+  padding-bottom: 200px;
+}
 pre {
   border-radius: 5px;
 }
@@ -25,4 +28,9 @@ pre {
 #iscContents {
   /* margin-top: 160px; */
   padding: 40px;
+}
+
+#postDate {
+  display: flex;
+  justify-content: end;
 }

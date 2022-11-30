@@ -24,25 +24,9 @@ function draw() {
 }
 
 function keyPressed() {
-  if (keyCode == LEFT_ARROW) {
-    ball.moves[0] = true;
-  }
-  if (keyCode == UP_ARROW) {
-    ball.moves[1] = true;
-  }
-  if (keyCode == RIGHT_ARROW) {
-    ball.moves[2] = true;
-  }
+  ball.keyPressed();
 }
 
 function keyReleased() {
-  if (keyCode == LEFT_ARROW) {
-    ball.moves[0] = false;
-  }
-  if (keyCode == UP_ARROW) {
-    ball.moves[1] = false;
-  }
-  if (keyCode == RIGHT_ARROW) {
-    ball.moves[2] = false;
-  }
+  ball.keyReleased();
 }

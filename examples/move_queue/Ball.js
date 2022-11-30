@@ -42,7 +42,6 @@ class Ball {
     for (let pf of platforms) {
       if (this.vY > 0) {
         if (pf.isCollided(this.x, this.y + this.r / 2)) {
-          // this.atBottom = true;
           this.vY = 0;
           this.y = pf.y - this.r / 2;
           this.atBottom = true;
@@ -64,5 +63,29 @@ class Ball {
     this.vY = this.vJ;
     this.y += this.vY;
     this.atBottom = false;
+  }
+
+  keyPressed() {
+    if (keyCode == LEFT_ARROW) {
+      this.moves[0] = true;
+    }
+    if (keyCode == UP_ARROW) {
+      this.moves[1] = true;
+    }
+    if (keyCode == RIGHT_ARROW) {
+      this.moves[2] = true;
+    }
+  }
+
+  keyReleased() {
+    if (keyCode == LEFT_ARROW) {
+      this.moves[0] = false;
+    }
+    if (keyCode == UP_ARROW) {
+      this.moves[1] = false;
+    }
+    if (keyCode == RIGHT_ARROW) {
+      this.moves[2] = false;
+    }
   }
 }
