@@ -21,6 +21,7 @@ pre {
   /* background-color: white; */
   border-bottom: 1px solid gray;
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 #iscTitle {
   /* margin-top: 80px; */
