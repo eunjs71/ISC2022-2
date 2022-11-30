@@ -335,32 +335,5 @@
       </div>
       <div id="postDate">2022-11-30 17:27</div>
     </div>
-
-    <script>
-      const moves = [false, false, false];
-      const keyEvents = ["keydown", "keyup"];
-      const moveFlags = [true, false];
-      const moveKeys = ["ArrowLeft", "ArrowUp", "ArrowRight"];
-      const moves_code = document.getElementById("moves");
-
-      function updateMoves() {
-        let hljs_literals = moves_code.getElementsByClassName("hljs-literal");
-        for (let i = 0; i < moves.length; i++) {
-          hljs_literals[i].innerText = moves[i];
-        }
-      }
-
-      for (let i = 0; i < keyEvents.length; i++) {
-        window.addEventListener(keyEvents[i], (e) => {
-          for (let j = 0; j < moveKeys.length; j++) {
-            if (e.key == moveKeys[j]) {
-              e.preventDefault();
-              moves[j] = moveFlags[i];
-            }
-          }
-          updateMoves();
-        });
-      }
-    </script>
   </body>
 </html>

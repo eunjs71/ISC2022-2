@@ -34,3 +34,9 @@ pre {
   display: flex;
   justify-content: end;
 }
+
+.iscContents-imgBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

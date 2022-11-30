@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>정보문화기술입문 2022년 2학기</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="iscHeader">
+        <h1 id="iscTitle">
+          <a href="../index.html">
+            <i class="fa-solid fa-i"></i>
+            <i class="fa-solid fa-s"></i>
+            <i class="fa-solid fa-c"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-0"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-minus"></i>
+            <i class="fa-solid fa-2"></i>
+          </a>
+        </h1>
+      </div>
+      <!-- <hr /> -->
+      <div id="iscContents">
+        <h2>캐릭터가 커지고 작아지는 극적인 효과 만들기</h2>
+        <ul>
+          <li>
+            예시 코드 :
+            <a
+              href="https://github.com/eunjs71/ISC2022-2/tree/main/examples/dash_shadow"
+              target="_blank"
+            >
+              https://github.com/eunjs71/ISC2022-2/tree/main/examples/dash_shadow
+            </a>
+          </li>
+          <li>
+            <a href="../examples/dash_shadow/index.html" target="_blank">
+              예시 스케치 보기
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </li>
+        </ul>
+
+        <div class="iscContents-imgBox">
+          <img src="../image/q&a_dash_shadow_1.png" alt="" />
+        </div>
+
+        <p>
+          캐릭터가 2가지 모드가 있고, 두 모드를 변경할 때, 모드를 변경하는
+          함수를 호출하는 동시에 각 모드에 맞는 이미지를 화면에 그리게 되면,
+          커지거나, 작아지는 것처럼 보이지 않고, 순간적으로 반짝 나타나게
+          됩니다. 이동하는 두 위치 사이에 잔상 효과를 주게 되면, 마치 커지면서
+          뛰어 나오거나, 작아지면서 다시 돌아오는 애니메이션을 구현할 수
+          있습니다.
+        </p>
+
+        <p>
+          달려나가면서 커지고, 다시 돌아오면 줄어드는 <code>Jake</code>라는
+          객체가 있습니다. <code>Jake</code>는 4가지 상태가 있습니다.
+        </p>
+
+        <ul>
+          <li><code>SMALL</code> : 작은 상태</li>
+          <li><code>GET_BIGGER</code> : 작은 상태 &rarr; 큰 상태</li>
+          <li><code>BIG</code> : 큰 상태</li>
+          <li><code>GET_SMALLER</code> : 큰 상태 &rarr; 작은 상태</li>
+        </ul>
+
+        <p>
+          <code>Jake</code>의 상태가 <code>SMALL</code>, 혹은 <code>BIG</code>일
+          때, <code>form_change()</code> 함수를 호출하면, 각각
+          <code>GET_BIGGER</code>, 혹은 <code>GET_SMALLER</code> 상태가 됩니다.
+          작은 상태, 큰 상태의 <code>Jake</code>의 좌표 및 크기 (<code>
+            x, y, w, h </code
+          >)를 통해 이동하는 중간 지점들의 좌표 및 크기를 map 함수를 통해 구할
+          수 있습니다. 이동하면서 <code>Shadow</code> 객체를 생성하며, 이 객체는
+          시간이 지날 수록 투명해지다 사라집니다.
+        </p>
+        <p>
+          아래 코드는 <code>setup()</code> 함수에서 <code>Jake</code> 객체를
+          생성하는 부분입니다.
+        </p>
+
+        <pre><code class="javascript">
+            ...
+
+            function setup() {
+                createCanvas(600, 600);
+              
+                jake = new Jake(
+                  small_jake_info,
+                  big_jake_info,
+                  img_big_jake,
+                  200, // speed
+                  10 //dim
+                );
+              
+                textAlign(LEFT, BOTTOM);
+              }
+              ...
+
+          </code></pre>
+
+        <p>
+          4번째 패러미터는 이동 속도, 5번째 패러미터는 그림자가 투명해지는
+          속도입니다. 조절해가며 잔상의 정도 및 효과를 조절해보세요.
+        </p>
+      </div>
+      <div id="postDate">2022-11-30 20:34</div>
+    </div>
+  </body>
+</html>
