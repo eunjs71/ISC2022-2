@@ -65,6 +65,9 @@ function draw() {
 function keyPressed() {
   jake.formChange();
 }
+function mousePressed() {
+  jake.formChange();
+}
 
 class Jake {
   constructor(small, big, big_img, speed, dim) {
