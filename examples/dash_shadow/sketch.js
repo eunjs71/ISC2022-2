@@ -35,7 +35,7 @@ function draw() {
   rect(0, 0, width, height);
 
   fill(0);
-  text("키를 눌러 효과를 확인하세요.", 20, 20);
+  text("키나 마우스를 눌러 효과를 확인하세요.", 20, 20);
 
   if (jake.mode == "SMALL") {
     image(img_finn_with_jake, 50, 450);
