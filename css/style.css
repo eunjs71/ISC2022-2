@@ -42,3 +42,6 @@ pre {
   justify-content: center;
   align-items: center;
 }
+.iscContents-imgBox img {
+  max-width: 100%;
+}
