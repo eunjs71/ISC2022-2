@@ -54,6 +54,15 @@
       <!-- <hr /> -->
       <div id="iscContents">
         <h2>플랫폼 게임에서 이동 및 점프</h2>
+        <ul>
+          <li>예시코드 :</li>
+          <li>
+            <a href="../examples/move_queue/index.html">
+              예시 스케치 보기
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </li>
+        </ul>
         <p>
           플랫폼 게임에서 캐릭터가 이동 및 점프하는 동작을 구현해 봅니다.
           좌우키(&larr;, &rarr;)나 윗방향키(&uarr;)를 눌러 발판(플랫폼)을 삼아
@@ -194,9 +203,9 @@
 
       for (let i = 0; i < keyEvents.length; i++) {
         window.addEventListener(keyEvents[i], (e) => {
-          e.preventDefault();
           for (let j = 0; j < moveKeys.length; j++) {
             if (e.key == moveKeys[j]) {
+              e.preventDefault();
               moves[j] = moveFlags[i];
             }
           }
