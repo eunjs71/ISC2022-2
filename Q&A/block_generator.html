@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>정보문화기술입문 2022년 2학기</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="iscHeader">
+        <h1 id="iscTitle">
+          <a href="../index.html">
+            <i class="fa-solid fa-i"></i>
+            <i class="fa-solid fa-s"></i>
+            <i class="fa-solid fa-c"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-0"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-minus"></i>
+            <i class="fa-solid fa-2"></i>
+          </a>
+        </h1>
+      </div>
+      <!-- <hr /> -->
+      <div id="iscContents">
+        <h2>블록 단위로 랜덤하게 Object 생성</h2>
+        <ul>
+          <li>
+            예시 코드 :
+            <a
+              href="https://github.com/eunjs71/ISC2022-2/tree/main/examples/move_queue"
+            >
+              https://github.com/eunjs71/ISC2022-2/tree/main/examples/move_queue
+            </a>
+          </li>
+          <li>
+            <a href="../examples/block_generator/index.html" target="_blank">
+              예시 스케치 보기
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </li>
+        </ul>
+        <p>
+          자동 횡이동 하는 맵에서 블록 단위로 랜덤하게 오브젝트를 생성하는
+          기능을 구현해 봅니다. 캐릭터가 피해야 하는 장애물이나, 습득하는
+          아이템을 단순하게 랜덤하게 생성할 경우, 여러 타입의 장애물이 겹쳐 피할
+          수 없게 되거나, 장애물과 아이템이 겹쳐 습득하지 못하는 경우가 발생할
+          수 있습니다. 따라서 이러한 객체들을 블록단위로 생성하고, 조건을 붙여
+          위의 상황을 방지해야 합니다. 전제되는 객체들와 주의사항 다음과
+          같습니다.
+        </p>
+        <ul>
+          <li>(장애물 1) 바닥에 생성되는 용암 - 점프로 피해야 함.</li>
+          <li>(장애물 2) 천장에 생성되는 암석 - 지나갈 때 점프하면 안 됨.</li>
+          <li>(아이템 1) 총알 - 점프로 습득</li>
+          <li>(주의 1) 용암과 암석이 동시에 생성되면 피할 수 없음.</li>
+          <li>
+            (주의 2) 점프는 N칸 할 수 있으므로, 용암이 N+1번 피할 수 없음.
+            (여기에서는 N = 1)
+          </li>
+          <li>
+            (주의 3) 암석과 총알이 동시에 생성되면, 총알을 습득할 수 없음.
+          </li>
+        </ul>
+        <h3>Block Controller</h3>
+        <p>
+          위의 여러 객체를 블록 단위로 관리하는
+          <code>BlockController</code>클래스를 만들어 블록들을 관리합니다.
+        </p>
+        <h4>블록 생성 - createBlocks()</h4>
+        <p>
+          블록의 크기를 <code>blockWidth</code>라고 하고, 맵 오른쪽에서 등장해
+          왼쪽으로 이동한다고 할 때, 갑자기 생겨나지 않고 자연스럽게 등장시키기
+          위해, 블록의 X좌표를 <code>width + blockWidth</code> 정도로 여유있게
+          생성합니다.
+        </p>
+        <p>
+          블록이 매 프레임마다 조금씩 이동하고 블록 한칸 너비만큼 이동했을 때,
+          새로운 블록을 생성합니다. 이 때 생성하는 룰은 다양할 수 있으며,
+          여기에서는 다음과 같은 예시 룰을 적용합니다.
+        </p>
+        <ul>
+          <li>
+            이전에 <code>0</code>개 블록을 생성했을 때 다음 중 하나를 랜덤으로
+            선택
+            <ul>
+              <li>블록을 생성하지 않음</li>
+              <li><code>Stone</code> 블록을 생성</li>
+              <li><code>Bullet</code> 블록을 생성</li>
+              <li><code>Lava</code> 블록을 생성</li>
+              <li><code>Bullet</code>, <code>Lava</code> 블록을 생성</li>
+            </ul>
+          </li>
+          <li>
+            이전에 <code>1</code>개 블록을 생성했을 때
+            <ul>
+              <li>
+                이전 블록이 <code>Stone</code>일 경우 다음 중 하나를 랜덤으로
+                선택
+                <ul>
+                  <li>블록을 생성하지 않음</li>
+                  <li><code>Stone</code> 블록을 생성</li>
+                  <li><code>Bullet</code> 블록을 생성</li>
+                  <li><code>Lava</code> 블록을 생성</li>
+                  <li><code>Bullet</code>, <code>Lava</code> 블록을 생성</li>
+                </ul>
+              </li>
+              <li>
+                이전 블록이 <code>Bullet</code>일 경우 다음 중 하나를 랜덤으로
+                선택
+                <ul>
+                  <li>블록을 생성하지 않음</li>
+                  <li><code>Stone</code> 블록을 생성</li>
+                  <li><code>Bullet</code> 블록을 생성</li>
+                  <li><code>Lava</code> 블록을 생성</li>
+                  <li><code>Bullet</code>, <code>Lava</code> 블록을 생성</li>
+                </ul>
+              </li>
+              <li>
+                이전 블록이 <code>Lava</code>일 경우
+                <ul>
+                  <li>블록을 생성하지 않음</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            이전에 <code>2</code>개 블록을 생성했을 때(<code>Bullet</code>,
+            <code>Lava</code>)
+            <ul>
+              <li>블록을 생성하지 않음</li>
+            </ul>
+          </li>
+        </ul>
+        <p>
+          위의 규칙을 단순하게 만들기 위해,
+          <code>randomCreateBlock()</code>함수를 다음과 같이 정의합니다.
+        </p>
+        <ul>
+          <li>
+            <code>randomCreateBlock()</code>
+            : 다음 중 하나를 랜덤으로 선택
+            <ul>
+              <li>블록을 생성하지 않음</li>
+              <li><code>Stone</code> 블록을 생성</li>
+              <li><code>Bullet</code> 블록을 생성</li>
+              <li><code>Lava</code> 블록을 생성</li>
+              <li><code>Bullet</code>, <code>Lava</code> 블록을 생성</li>
+            </ul>
+          </li>
+        </ul>
+
+        <p>위의 규칙은 다음과 같이 다시 정리됩니다.</p>
+
+        <ul>
+          <li>
+            이전에 <code>0</code>개 블록을 생성했을 때
+            <ul>
+              <li><code>randomCreateBlock()</code></li>
+            </ul>
+          </li>
+          <li>
+            이전에 <code>1</code>개 블록을 생성했을 때
+            <ul>
+              <li>
+                이전 블록이 <code>Lava</code>일 경우
+                <ul>
+                  <li>블록을 생성하지 않음</li>
+                </ul>
+              </li>
+              <li>
+                이전 블록이 <code>Lava</code>가 아닌 경우
+                <ul>
+                  <li><code>randomCreateBlock()</code></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            이전에 <code>2</code>개 블록을 생성했을 때(<code>Bullet</code>,
+            <code>Lava</code>)
+            <ul>
+              <li>블록을 생성하지 않음</li>
+            </ul>
+          </li>
+        </ul>
+
+        <p>위 규칙에 한해서, 조금 정리하면 다음과 같습니다.</p>
+
+        <ul>
+          <li>
+            이전 생성에서 <code>Lava</code>를 생성했을 경우
+            <ul>
+              <li><code>randomCreateBlock()</code></li>
+            </ul>
+          </li>
+          <li>
+            이전 생성에서 <code>Lava</code>를 생성하지 않았을 경우
+            <ul>
+              <li>블록을 생성하지 않음</li>
+            </ul>
+          </li>
+        </ul>
+
+        <p>
+          위의 규칙은 예시이며, 정하는 규칙에 따라 줄여지지 않거나, 줄이는
+          방법이 다를 수 있습니다.
+        </p>
+
+        <p>블록을 생성하는 pseudo code는 다음과 같습니다.</p>
+        <pre><code class="javascript">
+          createBlocks() {
+            if (this.pLava) {
+              this.pLava = false;
+              return;
+            }
+            this.randomCreateBlock();
+          }
+        
+          randomCreateBlock() {
+            let r = parseInt(random(5));
+            this.pLava = false;
+            if (r == 0) {
+              return;
+            }
+            if (r == 1) {
+              this.createStone();
+              return;
+            }
+            if (r == 2) {
+              this.createBullet();
+              return;
+            }
+            if (r == 3) {
+              this.createLava();
+              this.pLava = true;
+              return;
+            }
+            if (r == 4) {
+              this.createBullet();
+              this.createLava();
+              this.pLava = true;
+              return;
+            }
+          }
+
+          createStone() {
+            this.blocks.push(new Stone(this.blockW, this.blockH, this.blockSpeed));
+          }
+
+          ...
+        </code></pre>
+
+        <h4>블록 업데이트 - updateBlocks()</h4>
+
+        <p>
+          <code>BlockController</code>에서 블록을 생성할 때마다,
+          <code>this.blocks</code>에 계속 쌓입니다. 블록이 화면 왼쪽을 지나 더
+          이상 보이지 않게 되면, 이 블록을 계속해서 가지고 있을 필요가 없습니다.
+          따라서 블록이 화면 왼쪽 밖으로 나가게 되면 이를 제거 해줍니다.
+        </p>
+
+        <pre><code class="javascript">
+        updateBlocks() {
+          for (let i = 0; i < 2; i++) {
+            if (this.blocks.length > 0) {
+              let firstBlock = this.blocks[0];
+              if (firstBlock.x < -this.blockW) {
+                this.blocks.shift();
+              }
+            }
+          }
+        }
+        </code></pre>
+
+        <h4>블록 이동, 그리기 - moveBlocks(), drawBlocks()</h4>
+
+        <p>
+          <code>moveBlocks()</code>에서는 블록을 <code>this.blockSpeed</code>의
+          속도로 이동시킵니다. <code>this.blockW</code> (블록의 너비)만큼
+          이동했을 때, 블록 생성, 업데이트 함수를 호출합니다.
+          <code>drawBlocks()</code>함수에서는 블록을 화면에 그립니다.
+        </p>
+
+        <pre><code class="javascript">
+          moveBlocks() {
+            if (this.genCount <= 0) {
+              this.genCount = this.blockW;
+              this.createBlocks();
+              this.updateBlocks();
+            }
+            this.genCount -= this.blockSpeed;
+            for (let block of this.blocks) {
+              block.move();
+            }
+          }
+
+          drawBlocks() {
+            for (let block of this.blocks) {
+              block.draw();
+            }
+          }
+        </code></pre>
+      </div>
+      <div id="postDate">2022-11-30 17:27</div>
+    </div>
+
+    <script>
+      const moves = [false, false, false];
+      const keyEvents = ["keydown", "keyup"];
+      const moveFlags = [true, false];
+      const moveKeys = ["ArrowLeft", "ArrowUp", "ArrowRight"];
+      const moves_code = document.getElementById("moves");
+
+      function updateMoves() {
+        let hljs_literals = moves_code.getElementsByClassName("hljs-literal");
+        for (let i = 0; i < moves.length; i++) {
+          hljs_literals[i].innerText = moves[i];
+        }
+      }
+
+      for (let i = 0; i < keyEvents.length; i++) {
+        window.addEventListener(keyEvents[i], (e) => {
+          for (let j = 0; j < moveKeys.length; j++) {
+            if (e.key == moveKeys[j]) {
+              e.preventDefault();
+              moves[j] = moveFlags[i];
+            }
+          }
+          updateMoves();
+        });
+      }
+    </script>
+  </body>
+</html>
