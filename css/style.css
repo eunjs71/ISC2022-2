@@ -41,7 +41,9 @@ pre {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  padding-bottom: 40px;
 }
 .iscContents-imgBox img {
-  max-width: 100%;
+  max-width: 600px;
 }
