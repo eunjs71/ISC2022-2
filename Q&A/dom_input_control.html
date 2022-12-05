@@ -157,235 +157,54 @@
         <h3>Input show(), hide() 제어하기</h3>
 
         <p>
-          canvas 내에 있는 내용은 draw() 함수에서 매 프레임 그려야 하는 내용을
-          코딩해야 한다.
+          <code>&lt;canvas&gt;</code> 내에 있는 내용은
+          <code>draw()</code> 함수에서 매 프레임 그려야 하는 내용을 코딩해야
+          합니다. <code>&lt;input&gt;</code>은 <code>&lt;canvas&gt;</code> 와
+          별개의 객체로, 한번 생성하면 <code>draw()</code> 함수에서 그리지
+          않아도 그래도 존재합니다. 따라서 <code>&lt;input&gt;</code>을
+          보이거나, 보이지 않게 하는 <code>show()</code>,
+          <code>hide()</code> 같은 함수는 이벤트 함수에서 호출하는 것이
+          바람직합니다.
         </p>
 
-        <p>input()은 canvas와 별개로, 한번 생성하면 그대로 있음.</p>
-
-        <p>
-          따라서 show(), hide()는 이벤트 함수에서 호출하거나, draw()함수 내에서
-          사용하더라도, 변수를 이용해 1회성으로 호출해야 한다. 둘 중 선택이
-          가능하다면 이벤트 함수 호출이 더 바람직하다.
-        </p>
-
-        <p>
-          먼저 <code>p5.js Web Editor</code>에서 기본으로 제시하는 코드를
-          살펴보며 <code>canvas</code> 및 <code>DOM</code>이 생성되는 과정을
-          보겠습니다. <code>index.html</code>의 <code>body</code> 부분,
-          <code>sketch.js</code> 의 내용은 다음과 같습니다.
-        </p>
-
-        <pre><code class="html">
-
-            &lt;body&gt;
-                &lt;main&gt;
-                &lt;/main&gt;
-                &lt;script src="sketch.js"&gt;&lt;/script&gt;
-            &lt;/body&gt;
-
-        </code></pre>
-        <pre><code class="javascript">
-
-            function setup() {
-                createCanvas(400, 400);
-            }
-              
-            function draw() {
-                background(220);
-            }
-
-        </code></pre>
-
-        <p>
-          해당 페이지를 실행했을 때, 페이지 검사를 통해 다시 HTML 문서를
-          살펴보면 다음과 같습니다.
-        </p>
-
-        <pre><code class="html">
-
-            &lt;body&gt;
-                &lt;main&gt;
-                    &lt;canvas id="defaultCanvas0" class="p5Canvas" width="400" height="400" style="width: 400px; height: 400px;"&gt;&lt;/canvas&gt;
-                &lt;/main&gt;
-                &lt;script src="blob:https://preview.p5js.org/4489e7ce-190c-4717-8528-f77ba5a17fdd"&gt;&lt;/script&gt;
-            &lt;/body&gt;
-
-        </code></pre>
-
-        <p>
-          <code>sketch.js</code> 내에서
-          <code>createCanvas(400, 400)</code> 함수가 호출되면 위와 같이
-          <code>&lt;main&gt;</code> 태그 안에 <code>&lt;canvas&gt;</code>가
-          생성됩니다.
-        </p>
-        <p>
-          이번에는 <code>&lt;input&gt;</code>을 생성해보겠습니다. 다음은
-          <code>
-            <a
-              href="https://p5js.org/reference/#/p5/createInput"
-              target="_blank"
-            >
-              createInput()
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </a>
-          </code>
-          예제 코드와 그 실행 결과 입니다.
-        </p>
-
-        <pre><code class="javascript">
-
-            function setup() {
-                createCanvas(100, 100);
-                background('grey');
-                let inp = createInput('');
-                inp.position(0, 0);
-                inp.size(100);
-                inp.input(myInputEvent);
-              }
-              
-              function myInputEvent() {
-                console.log('you are typing: ', this.value());
-              }
-
-        </code></pre>
         <div class="iscContents-imgBox">
-          <img src="../image/q&a_input_text_createInput_default.png" alt="" />
+          <img src="../image/q&a_dom_input_control_hide.png" alt="" />
         </div>
-        <pre><code class="html">
-
-            &lt;body&gt;
-                &lt;main&gt;
-                    &lt;canvas id="defaultCanvas0" class="p5Canvas" width="100" height="100" style="width: 100px; height: 100px;"&gt;&lt;/canvas&gt;
-                &lt;/main&gt;
-                &lt;script src="blob:https://preview.p5js.org/fd3c15a0-349b-4703-b987-d846b0a9435a"&gt;&lt;/script&gt;
-                &lt;input value="" type="text" width="100" height="0" style="position: absolute; left: 0px; top: 0px; width: 100px;"&gt;
-            &lt;/body&gt;
-
-        </code></pre>
-
-        <p>
-          <code>createInput()</code>을 통해 생성된 <code>&lt;input&gt;</code>은
-          <code>&lt;body&gt;</code> 안에서 맨 아래에 붙어 있고, 화면에서는
-          <code>&lt;canvas&gt;</code> 위에 덧그려진 것을 확인할 수 있습니다.
-        </p>
-        <p>
-          <code>setup()</code>에서 <code>inp.position(0, 0)</code>을 통해 위치를
-          맨 왼쪽 위로 위치시켰습니다. 보통은 <code>canvas</code> 또한 이 위치가
-          고정되어 있어 마치 <code>canvas</code>의 좌표 기준으로 보입니다. 이를
-          확인해 보기 위해 <code>style.css</code> 내용을 약간 수정해보겠습니다.
-          <code>&lt;main&gt;</code> 태그 안에 <code>padding</code>을 통해 내부
-          여백 공간을 상하좌우 <code>20px</code> 추가하겠습니다.
-        </p>
-
-        <pre><code class="css">
-
-            html, body {
-                margin: 0;
-                padding: 0;
-            }
-            main {
-                padding: 20px;
-            }
-            canvas {
-                display: block;
-            }
-              
-        </code></pre>
 
         <div class="iscContents-imgBox">
-          <img
-            src="../image/q&a_input_text_createInput_main_padding.png"
-            alt=""
-          />
+          <img src="../image/q&a_dom_input_control_show.png" alt="" />
         </div>
 
         <p>
-          <code>&lt;main&gt;</code> 내부에 여백 공간이 생겨 그 만큼
-          <code>&lt;canvas&gt;</code>의 위치가 약간 오른쪽 아래로 내려왔음에도,
-          <code>&lt;input&gt;</code>의 위치는 그대로 인 것을 확인할 수 있습니다.
-          즉, <code>inp.position(0, 0)</code>에서 좌표는 화면 기준임을 알 수
-          있습니다. <b>CSS</b>에서 캔버스 위치를 조정할 경우,
-          <code>&lt;canvas&gt;</code>의 위치를 알아내어 그에 맞게
-          <code>&lt;input&gt;</code>을 조정해야 합니다. <code>p5.js</code>의
-          <code>DOM</code> 생성함수를 호출하면 <code>p5.Element</code> 객체가
-          생성됩니다. 해당 객체의 <code>.elt</code>는 <code>DOM</code>에 직접
-          접근할 수 있도록 해줍니다. <code>DOM</code>에 직접 접근하면
-          <code>DOM</code>이 가지고 있는 함수를 직접 사용할 수 있습니다.
-          <code>DOM</code>이 가진 함수 중 <code>getBoundingClientRect()</code>는
-          <code>DOM</code>이 화면에 그려질 때 이에 대한 여러
-          정보(<code>x</code>, <code>y</code>, <code>with</code>,
-          <code>height</code>, ...)를 제공합니다. 이를 이용하여
-          <code>DOM</code>을 <code>&lt;canvas&gt;</code> 기준으로 위치 시킬 수
-          있습니다.
+          예제를 살펴보면, 처음 화면에서 <b>입력</b> 버튼을 눌렀을 때 이름 입력
+          창과 함께 <code>&lt;input&gt;</code>에 대해 <code>show()</code>를
+          호출하여 함께 보이고 하고, <b>확인</b> 버튼을 누르면
+          <code>hide()</code> 함수를 호출하여 창과 함께
+          <code>&lt;input&gt;</code>을 숨깁니다.
         </p>
 
-        <pre><code class="javascript">
-
-            function setup() {
-                let cnv = createCanvas(100, 100);
-                let cnvRect = cnv.elt.getBoundingClientRect()
-                console.log(cnvRect)
-                
-                background('grey');
-                let inp = createInput('');
-                inp.position(cnvRect.x, cnvRect.y);
-                inp.size(100);
-                inp.input(myInputEvent);
-              }
-              
-              function myInputEvent() {
-                console.log('you are typing: ', this.value());
-              }
-
-        </code></pre>
-        <div class="iscContents-imgBox">
-          <img
-            src="../image/q&a_input_text_createInput_main_domRect.png"
-            alt=""
-          />
-        </div>
-        <h4>참고 자료</h4>
+        <h4>참고자료</h4>
         <ul>
           <li>
             <a
-              href="https://developer.mozilla.org/ko/docs/Web/API/Document_Object_Model/Introduction"
+              href="https://developer.mozilla.org/ko/docs/Web/API/Document/activeElement"
               target="_blank"
             >
-              DOM 소개
+              activeElement
               <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
-          </li>
-          <li>
-            <a
-              href="https://developer.mozilla.org/ko/docs/Web/API/Element/getBoundingClientRect"
-              target="_blank"
-            >
-              Element.getBoundingClientRect()
-              <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            </a>
-          </li>
-        </ul>
-        <h4>주의 사항</h4>
-        <ul>
-          <li>
-            화면의 크기가 바뀔 때마다 캔버스를 유동적으로 변화시키는 기획을
-            했다면,
-            <code>
-              <a
-                href="https://p5js.org/reference/#/p5/windowResized"
-                target="_blank"
-              >
-                windowResize()
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-              </a>
-            </code>
-            를 이용하여, <code>setup()</code>에서 생성한 <code>DOM</code>도 그에
-            따라 위치 및 크기를 변경하는 것을 고려해야 합니다.
+            <ul>
+              <li>
+                activeElement를 이용할 경우, <code>&lt;input&gt;</code>이 선택된
+                상태에서 엔터 키를 칠 때, 확인 버튼을 누르는 것과 같은 효과를
+                구현할 수 있지만, 강의 범위를 아득히 벗어나게 되어 설명은 따로
+                적지 않았습니다. 요청하시면 코드는 보내드립니다.
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
-      <div id="postDate">2022-12-05 18:41</div>
+      <div id="postDate">2022-12-05 20:46</div>
     </div>
   </body>
 </html>
