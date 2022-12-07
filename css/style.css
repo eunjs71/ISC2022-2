@@ -95,5 +95,14 @@ pre {
   padding-bottom: 40px;
 }
 .iscContents-imgBox img {
-  max-width: 600px;
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  #iscContents {
+    padding: 8px;
+  }
+  .iscContents {
+    padding: 8px;
+  }
 }
