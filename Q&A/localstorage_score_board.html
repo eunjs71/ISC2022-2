@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>정보문화기술입문 2022년 2학기</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="iscHeader">
+        <h1 id="iscTitle">
+          <a href="../index.html">
+            <i class="fa-solid fa-i"></i>
+            <i class="fa-solid fa-s"></i>
+            <i class="fa-solid fa-c"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-0"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-minus"></i>
+            <i class="fa-solid fa-2"></i>
+          </a>
+        </h1>
+      </div>
+      <!-- <hr /> -->
+      <div id="iscContents">
+        <h2>[localStorage] 새로고침을 해도 유지되는 스코어보드 만들기</h2>
+        <ul>
+          <li>
+            예시 코드 :
+            <a
+              href="https://github.com/eunjs71/ISC2022-2/tree/main/examples/localstorage_score_board"
+              target="_blank"
+            >
+              https://github.com/eunjs71/ISC2022-2/tree/main/examples/localstorage_score_board
+            </a>
+          </li>
+          <li>
+            <a
+              href="../examples/localstorage_score_board/index.html"
+              target="_blank"
+            >
+              예시 스케치 보기
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </li>
+        </ul>
+
+        <h3>localStorage에 값 저장하고 불러오기</h3>
+
+        <p>
+          <a href="../Q&A/score_board.html">
+            스코어보드 만들기
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          에서는 게임을 플레이하고 나서, 점수가 나오면 이를 스코어보드에
+          기록해보는 시스템을 구현하였습니다.
+        </p>
+
+        <p>
+          하지만 스코어보드에 저장된 점수는 페이지를 새로고침하면 모두
+          초기화됩니다.
+        </p>
+
+        <p>
+          <b>localStorage</b>를 사용하면, 새로고침을 하더라도 이전에 저장해
+          놓았던 정보를 다시 불러 올 수 있습니다.
+        </p>
+
+        <p>
+          <b>localStorage</b>에 정보를 저장하더라도, 컴퓨터 전원을 끄거나,
+          브라우저를 완전히 종료하거나, 여러 페이지를 돌아다니면서 메모리가 차면
+          이 정보도 사라질 수 있습니다.
+        </p>
+
+        <p>
+          가장 안전하게 데이터를 저장하는 방법은 파일을 쓰고 불러오거나, 데이터
+          베이스를 연결하는 방법이지만, 과제전에 전시하기에는
+          <b>localStorage</b>만 사용하더라도 큰 무리가 없습니다.
+        </p>
+
+        <p>
+          <b>localStorage</b>에 정보를 저장하고 불러오는 함수는 다음과 같습니다.
+        </p>
+
+        <ul>
+          <li>
+            <code>localStorage.setItem(key, value)</code>: <b>localStorage</b>의
+            <code>key</code> 값에 <code>vaule</code>를 저장합니다.
+          </li>
+          <li>
+            <code>localStorage.getItem(key)</code>: <b>localStorage</b>의
+            <code>key</code>에 저장된 값을 불러 옵니다.
+          </li>
+        </ul>
+
+        <p><code>p5.js</code> 에디터에 다음 코드를 작성하고 실행해봅시다.</p>
+
+        <pre><code class="javascript">
+            function setup() {
+                localStorage.setItem('ToDo', 'GO HOME.') 
+              }
+          </code></pre>
+
+        <p>
+          크롬 창에서 검사(Inpect)를 눌러 <b>Application</b> &gt;
+          <b>Storage</b> &gt; <b>Local Storage</b>를 확인해봅니다.
+        </p>
+
+        <div class="iscContents-imgBox">
+          <img src="../image/q&a_localstorage_score_board_inspect.png" alt="" />
+        </div>
+
+        <p>
+          <code>setup()</code>에서 저장한 <code>key</code>,
+          <code>value</code> 값이 저장되어 있음을 확인할 수 있습니다.
+        </p>
+
+        <p>이제 페이지를 <b>새로고침</b> 한뒤 다음의 코드를 실행해봅니다.</p>
+
+        <pre><code class="javascript">
+            function setup() {
+                console.log(localStorage.getItem('ToDo'))
+              }
+          </code></pre>
+
+        <p>
+          방금 저장한 문자열 <code>"GO HOME."</code>이 콘솔 창에 나타나는 것을
+          확인하실 수 있습니다.
+        </p>
+
+        <p>이번에는 <code>object</code>를 저장해보겠습니다.</p>
+
+        <pre><code class="javascript">
+            function setup() {
+                let user = {name: "Jin", score: 98}
+                localStorage.setItem('user', user) 
+              }              
+          </code></pre>
+
+        <p>
+          <code>user</code>라는 <code>object</code>는 <code>name</code>,
+          <code>score</code>라는 <code>key</code>를 가지고 있고, 각
+          <code>key</code> 마다 "Jin", 98이라는 값을 가지고 있습니다.
+        </p>
+
+        <p>
+          이 코드를 실행하면 <b>localStorage</b>에 다음과 같이 저장되어 있음을
+          확인하실 수 있습니다.
+        </p>
+
+        <div class="iscContents-imgBox">
+          <img
+            src="../image/q&a_localstorage_score_board_save_object.png"
+            alt=""
+          />
+        </div>
+
+        <p>이를 <b>localStorage</b>에 저장하고, 다시 불러오겠습니다.</p>
+
+        <pre><code class="javascript">
+            function setup() {
+                let user = localStorage.getItem('user') 
+                console.log(user)
+                console.log(user.name)
+                console.log(user.score)
+              }              
+          </code></pre>
+
+        <p>
+          변수 <code>user</code>에 <b>localStorage</b>에서 불러온 값을 저장하고,
+          <code>user</code>와, <code>user.name</code>, <code>user.score</code>가
+          가지고 있는 값을 <code>console.log()</code>를 통해 확인해보겠습니다.
+        </p>
+
+        <div class="iscContents-imgBox">
+          <img
+            src="../image/q&a_localstorage_score_board_get_object_console.png"
+          />
+        </div>
+
+        <p>
+          이와 같은 결과가 나오는 이유는, <b>localStorage</b>가
+          <code>value</code>로 <code>string</code> 타입 밖에 받지 못하기
+          때문입니다.
+        </p>
+
+        <p>
+          따라서 우리는 변수의 모든 정보를 <code>string</code>으로 전환하고(마치
+          코드에 써놓은 내용 그대로를 저장하듯), 다시 이를 원래의 정보로
+          되돌려야 합니다.
+        </p>
+
+        <p>
+          이 때 사용하는 함수가 <code>JSON.stringify()</code>,
+          <code>JSON.parse()</code>입니다.
+        </p>
+
+        <ul>
+          <li>
+            <code>JSON.stringify()</code>: <code>javascript</code>의 변수를
+            <code>string</code>으로 변환.
+          </li>
+          <li>
+            <code>JSON.parse()</code>: <code>JSON.stringify()</code>로 변환된
+            <code>string</code>을 원래의 상태로 되돌림.
+          </li>
+        </ul>
+
+        <p>
+          이 두 함수를 이용하여 <code>user</code>를 저장했다가, 되돌려봅니다.
+        </p>
+
+        <pre><code class="javascript">
+            function setup() {
+                let user = { name: "Jin", score: 98 };
+                localStorage.setItem("user", JSON.stringify(user));
+              }              
+          </code></pre>
+
+        <div class="iscContents-imgBox">
+          <img src="../image/q&a_localstorage_score_board_stringify_save.png" />
+        </div>
+
+        <p>
+          이전 과는 다르게 <code>value</code>에 <code>[object Object]</code>가
+          아닌 <code>{"name":"Jin","score":98}</code>가 입력되어 있습니다.
+        </p>
+
+        <p>
+          현재 <code>{"name":"Jin","score":98}</code>는 문자열이므로 가져올 때
+          <code>JSON.parse()</code>를 이용해 원래대로 변환해주어야 합니다.
+        </p>
+
+        <p>다음의 코드를 실행한 결과는 다음과 같습니다.</p>
+
+        <pre><code class="javascript">
+            function setup() {
+                let user = JSON.parse(localStorage.getItem("user"));
+                console.log(user);
+                console.log(user.name);
+                console.log(user.score);
+              }              
+          </code></pre>
+        <div class="iscContents-imgBox">
+          <img src="../image/q&a_localstorage_score_board_parse_data.png" />
+        </div>
+
+        <h3>스코어보드에 localStorage 적용하기</h3>
+
+        <p>
+          <code>ScoreBoard</code>에 두 함수 <code>loadScoreBoard()</code>,
+          <code>saveScoreBoard()</code>가 추가되었습니다.
+        </p>
+
+        <pre><code class="javascript">
+            class ScoreBoard {
+                constructor() {
+                  this.scores = [];
+                  this.loadScoreBoard();
+                }
+                draw() {
+                  ...
+                  }
+                }
+                isNewRank(new_score) {
+                  ...
+                }
+                addRank(new_name, new_score) {
+                  this.scores.push({ name: new_name, score: new_score });
+                  this.scores.sort((a, b) => a.score - b.score).reverse();
+                  this.scores = this.scores.slice(0, 5);
+                  this.saveScoreBoard();
+                }
+                loadScoreBoard() {
+                  if (localStorage.getItem("SCORE_BOARD") === null) {
+                    for (let i = 0; i < 5; i++) {
+                      this.scores.push({ name: "________", score: 0 });
+                    }
+                    return;
+                  }
+                  this.scores = JSON.parse(localStorage.getItem("SCORE_BOARD"));
+                }
+                saveScoreBoard() {
+                  localStorage.setItem("SCORE_BOARD", JSON.stringify(this.scores));
+                }
+              }
+        </code></pre>
+
+        <ul>
+          <li>
+            <code>loadScoreBoard()</code>
+            <ul>
+              <li>
+                <b>localStorage</b>에 <b>"SCORE_BOARD"</b>라는
+                <code>Key</code>가 있으면 해당 정보를 불러옴
+              </li>
+
+              <li>없으면 초기화</li>
+            </ul>
+          </li>
+          <li>
+            <code>saveScoreBoard()</code>
+            <ul>
+              <li><b>localStorage</b>에 랭킹을 저장</li>
+              <li>새로운 기록이 생길 때 마다 호출</li>
+            </ul>
+          </li>
+        </ul>
+
+        <p></p>
+      </div>
+      <div id="postDate">2022-12-08 20:44</div>
+    </div>
+  </body>
+</html>
