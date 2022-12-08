@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>정보문화기술입문 2022년 2학기</title>
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="iscHeader">
+        <h1 id="iscTitle">
+          <a href="../index.html">
+            <i class="fa-solid fa-i"></i>
+            <i class="fa-solid fa-s"></i>
+            <i class="fa-solid fa-c"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-0"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-2"></i>
+            <i class="fa-solid fa-minus"></i>
+            <i class="fa-solid fa-2"></i>
+          </a>
+        </h1>
+      </div>
+      <!-- <hr /> -->
+      <div id="iscContents">
+        <h2>[HTML, CSS] 스케치 옆에 설명서 붙이기</h2>
+        <ul>
+          <li>
+            예시 코드 :
+            <a
+              href="https://github.com/eunjs71/ISC2022-2/tree/main/examples/how_to_use"
+              target="_blank"
+            >
+              https://github.com/eunjs71/ISC2022-2/tree/main/examples/how_to_use
+            </a>
+          </li>
+          <li>
+            <a href="../examples/how_to_use/index.html" target="_blank">
+              예시 스케치 보기
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </li>
+        </ul>
+
+        <p>
+          게임에 대한 조작 방법을 설명하는 것은 단계 별로 스테이지 시작 전에
+          스케치 내에서 보여줄 수 있습니다.
+        </p>
+
+        <p>
+          조작법이 매우 복잡한 경우, 안내 이미지를 만들어 항상 띄워두는게 좋을
+          수도 있습니다.
+        </p>
+
+        <p>
+          안내 이미지의 크기 만큼 스케치를 넓혀 항상 띄우는 것도 매우 비효율적인
+          방식일 것입니다.
+        </p>
+
+        <p>
+          따라서, <b>HTML, CSS</b>를 조금 활용하여 이미지 파일을 직접 캔버스
+          옆에 띄워볼 것입니다.
+        </p>
+
+        <h3>Flexbox로 HTML 요소 정렬하기</h3>
+        <ul>
+          <li>
+            <a
+              href="https://developer.mozilla.org/ko/docs/Learn/CSS/CSS_layout/Flexbox"
+              target="_blank"
+            >
+              Flexbox
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </li>
+        </ul>
+
+        <p>
+          아직 <b>HTML</b>, <b>CSS</b>에 대해 잘 모르시거나, 깊게 배우지 않은
+          상태에서 무언가를 해야한다면 "<b>CSS</b>에서 모든 엘리먼트는
+          <code>display: flex;</code>를 쓰고 시작한다."고 생각하세요. 자세한
+          설명은 여기서 하지 않겠습니다.
+        </p>
+
+        <p>
+          <code>display: flex;</code>가 적용된 엘리먼트는 내부의 요소들의
+          주축(Main Axis) 방향으로 나열하며, <code>flex-direction</code> 속성을
+          통해 주축의 방향을 결정할 수 있습니다.
+        </p>
+
+        <ul>
+          <li>
+            <code>flex-direction: row;</code> (기본값): 주축을 수평으로 정함
+            (왼쪽 &rarr; 오른쪽)
+          </li>
+          <li>
+            <code>flex-direction: column;</code>: 주축을 수직으로 정함 (위쪽
+            &rarr; 아래쪽)
+          </li>
+        </ul>
+
+        <p>
+          따라서 <code>myContainer</code>라는 요소를 만들고, 그 안에
+          <code>main</code>(스케치가 생성되는 곳), <code>img</code>(이미지)를
+          넣어 줄 것입니다.
+        </p>
+
+        <p><code>index.html</code>은 다음과 같이 됩니다.</p>
+
+        <ul>
+          <li>변경 전</li>
+        </ul>
+        <pre><code class="html">
+            &lt;body&gt;
+                &lt;main&gt;&lt;/main&gt;
+            &lt;/body>
+        </code></pre>
+        <ul>
+          <li>변경 후</li>
+        </ul>
+        <pre><code class="html">
+                &lt;body&gt;
+                    &lt;div id="myContainer"&gt;
+                        &lt;main&gt;&lt;/main&gt;
+                        &lt;img src="image/how_to_use.png" /&gt;
+                    &lt;/div&gt;
+                &lt;/body>
+            </code></pre>
+        <p>
+          <b>CSS</b>에서 <code>myContainer</code>에는
+          <code>display: flex;</code> 속성을 붙여줍니다.
+          <code>myContainer</code>라는 <code>id</code>를 가진 요소에 대한
+          스타일을 지정할 때는 앞에 <code>#</code>을 붙여줍니다.
+        </p>
+
+        <pre><code class="css">
+            #myContainer {
+                display: flex;
+                flex-direction: row;
+              }
+        </code></pre>
+
+        <p><b>CSS</b>까지 적용하면 나오는 화면은 다음과 같습니다.</p>
+
+        <div class="iscContents-imgBox">
+          <img src="../image/q&a_how_to_use_flex_container.png" alt="" />
+        </div>
+
+        <p>이미지가 너무 크므로 조금 줄여보겠습니다.</p>
+        <p>
+          이미지 태그에 <code>how-to-use</code>라는 <code>id</code>를 붙이고
+          <b>CSS</b>에서 너비와 높이를 조정합니다.
+        </p>
+        <pre><code class="html">
+            &lt;body&gt;
+                &lt;div id="myContainer"&gt;
+                    &lt;main&gt;&lt;/main&gt;
+                    &lt;img id="how-to-use" src="image/how_to_use.png" /&gt;
+                &lt;/div&gt;
+            &lt;/body>
+        </code></pre>
+
+        <pre><code class="css">
+            #how-to-use {
+                width: 300px;
+                height: 300px;
+              }
+        </code></pre>
+
+        <div class="iscContents-imgBox">
+          <img src="../image/q&a_how_to_use_img_size_down.png" alt="" />
+        </div>
+
+        <p>이미지의 크기가 알맞게 조정되었습니다.</p>
+        <p>
+          하지만 두 요소가 화면 위쪽으로 붙어 있는 게 아니라
+          <code>myContainer</code>의 주축(왼쪽 &rarr; 오른쪽)에 수직인 방향을
+          기준으로 가운데 정렬을 하고 싶습니다.
+        </p>
+        <p>
+          주축 기준 정렬은 <code>justify-content</code>, 주축에 직각인 방향
+          정렬은 <code>align-items</code>를 통해 할 수 있습니다.
+        </p>
+
+        <pre><code class="css">
+            #myContainer {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+              }
+        </code></pre>
+
+        <div class="iscContents-imgBox">
+          <img src="../image/q&a_how_to_use_align_items_center.png" alt="" />
+        </div>
+
+        <p>
+          여기에서 주축 방향으로 가운데
+          정렬(<code>justify-content:center;</code>)을 하면 어떻게 될까요?
+        </p>
+
+        <pre><code class="css">
+            #myContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+              }
+        </code></pre>
+
+        <div class="iscContents-imgBox">
+          <img src="../image/q&a_how_to_use_justify_contents_center.png" />
+        </div>
+
+        <p><code>window</code> 기준으로 화면 가운데에 오게 됩니다.</p>
+        <p>
+          <code>myContainer</code>의 높이는 내부 요소들로 결정 되기 때문에, 상하
+          기준으로는 화면 가운데로 오지 못합니다.
+        </p>
+        <p>
+          따라서 <code>myContainer</code>가 화면 한 가운데 오게 하고 싶다면,
+          크기를 화면 만큼 키워주면 됩니다.
+        </p>
+        <p>
+          고정된 크기는 <code>px</code> 단위를 쓰지만, 화면 크기에 비례한
+          사이즈를 쓰고 싶으면 <code>vw</code>, <code>vh</code>를 씁니다.
+        </p>
+
+        <p>
+          <code>100vw</code>는 창 내부 너비, <code>100vh</code>는 창 내부
+          높이입니다. 알맞은 크기에 맞게 사용하시면 됩니다.
+        </p>
+        <pre><code class="css">
+            #myContainer {
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+              }
+        </code></pre>
+
+        <div class="iscContents-imgBox">
+          <img src="../image/q&a_how_to_use_window_center.png" />
+        </div>
+        <p>
+          이미지가 너무 붙어 있어 여백을 주고 싶으면
+          <code>margin</code>을 사용합니다. 여기서는 왼쪽 여백만 있으면 되므로
+          <code>margin-left</code>를 사용합니다.
+        </p>
+        <pre><code class="css">
+            #how-to-use {
+                width: 300px;
+                height: 300px;
+                margin-left: 40px;
+              }
+        </code></pre>
+        <div class="iscContents-imgBox">
+          <img src="../image/q&a_how_to_use_margin_left.png" />
+        </div>
+
+        <p></p>
+      </div>
+      <div id="postDate">2022-12-08 22:22</div>
+    </div>
+  </body>
+</html>
