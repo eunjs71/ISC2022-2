@@ -1,14 +1,16 @@
+const MENU_HOME = "MENU_HOME";
 const MENU_READY = "MENU_READY";
 const MENU_QNA = "MENU_QNA";
 const MENU_ARCHIVE = "MENU_ARCHIVE";
 
 const MENU_WINDOW = {
+  MENU_HOME: "iscContents-home",
   MENU_READY: "iscContents-ready",
   MENU_QNA: "iscContents-qna",
   MENU_ARCHIVE: "iscContents-archive",
 };
 
-let menu = MENU_READY;
+let menu = MENU_HOME;
 
 function onMenuClicked(e) {
   //   console.log(e);

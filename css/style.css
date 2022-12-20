@@ -49,9 +49,12 @@ pre {
   font-weight: 600;
   color: black;
 }
+#iscContents-home {
+  display: flex;
+}
 
 #iscContents-ready {
-  display: flex;
+  display: none;
 }
 #iscContents-qna {
   display: none;
