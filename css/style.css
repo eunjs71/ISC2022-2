@@ -126,6 +126,8 @@ pre {
 .assignmentImg {
   align-self: center;
   padding: 40px;
+  display: flex;
+  flex-direction: row;
   /* max-width: 100%; */
 }
 .assignmentImg img {
